@@ -91,7 +91,7 @@ const addCourses = async (req, res) => {
 
 const getCourses = async (req, res) => {
     try {
-        const courses = await Course.find({}).populate("instructor", "fullName email")
+        const courses = await Course.find({}).populate("instructor", "fullName email").populate("studentsEnrolled", "fullName email")
         res.status(200).json({
             message: "Courses list fetched succesfully!", courses
         })
@@ -110,7 +110,7 @@ const updateCourses = async (req, res) => {
     }
 
     const course = await Course.findById(id);
-    
+
     if (!course) {
       return res.status(404).json({ message: 'Course not found!' });
     }

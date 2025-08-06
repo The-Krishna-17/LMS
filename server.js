@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import verifyToken from "./middleware/authMiddleware.js";
 import authorizeRole from "./middleware/authorizeMiddleware.js";
 import adminRoutes from "./routes/adminRoutes.js"
+import studentRoutes from "./routes/studentRoutes.js"
 
 const app = express();
 dotenv.config();
@@ -23,6 +24,7 @@ connectDB().then(() => {
 
 app.use('/api', authRoutes)
 app.use('/api/admin/dashboard',verifyToken, authorizeRole('admin'), adminRoutes)
+app.use('/api/student/dashboard', verifyToken, authorizeRole('student'), studentRoutes)
 
 // for testing purspose 
 app.get('/api/student/dashboard', verifyToken, authorizeRole('student'), (req, res) => {
